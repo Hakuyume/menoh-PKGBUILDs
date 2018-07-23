@@ -1,5 +1,5 @@
 pkgname=menoh
-pkgver=1.0.2
+pkgver=1.0.3
 pkgrel=1
 pkgdesc='DNN inference library with C API'
 arch=('x86_64')
@@ -9,11 +9,6 @@ depends=('mkl-dnn>=0.14' 'protobuf')
 makedepends=('cmake' 'git')
 source=("git+https://github.com/pfnet-research/menoh.git#tag=v$pkgver")
 sha256sums=('SKIP')
-
-prepare() {
-    cd "$pkgname"
-    echo 'install(TARGETS onnx_viewer RUNTIME DESTINATION "bin")' >> tool/CMakeLists.txt
-}
 
 build() {
     cd "$pkgname"
