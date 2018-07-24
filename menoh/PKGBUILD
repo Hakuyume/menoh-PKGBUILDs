@@ -7,6 +7,7 @@ url='https://github.com/pfnet-research/menoh'
 license=('MIT')
 depends=('mkl-dnn>=0.14' 'protobuf')
 makedepends=('cmake' 'git')
+checkdepends=('python')
 source=("git+https://github.com/pfnet-research/menoh.git#tag=v$pkgver")
 sha256sums=('SKIP')
 
@@ -18,11 +19,24 @@ build() {
     cmake .. \
           -DCMAKE_INSTALL_PREFIX=/usr \
           -DCMAKE_BUILD_TYPE=Release \
-          -DENABLE_TEST=OFF \
+          -DENABLE_TEST=ON \
           -DENABLE_BENCHMARK=OFF \
           -DENABLE_EXAMPLE=OFF \
           -DENABLE_TOOL=ON
     make
+}
+
+check() {
+    cd "$pkgname"
+    python -m venv venv
+    source venv/bin/activate
+    pip install chainer
+    mkdir -p data
+    python retrieve_data.py
+    python gen_test_data.py
+
+    cd build
+    ./test/menoh_test
 }
 
 package() {
