@@ -42,5 +42,7 @@ check() {
 package() {
     cd "$pkgname"
     cd build
-    make DESTDIR="$pkgdir" install
+    make -C include DESTDIR="$pkgdir" install
+    make -C menoh DESTDIR="$pkgdir" install
+    make -C tool DESTDIR="$pkgdir" install
 }
