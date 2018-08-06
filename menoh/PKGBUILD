@@ -1,6 +1,6 @@
 pkgname=menoh
 pkgver=1.0.3
-pkgrel=1
+pkgrel=2
 pkgdesc='DNN inference library with C API'
 arch=('x86_64')
 url='https://github.com/pfnet-research/menoh'
@@ -10,6 +10,12 @@ makedepends=('cmake' 'git')
 checkdepends=('python')
 source=("git+https://github.com/pfnet-research/menoh.git#tag=v$pkgver")
 sha256sums=('SKIP')
+
+prepare() {
+    cd "$pkgname"
+    sed -e 's/MENOH_PATCH_VERSION 2/MENOH_PATCH_VERSION 3/' \
+        -i CMakeLists.txt
+}
 
 build() {
     cd "$pkgname"
