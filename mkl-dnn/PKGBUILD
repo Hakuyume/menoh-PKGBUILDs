@@ -1,26 +1,22 @@
 pkgname=mkl-dnn
-pkgver=0.15
-pkgrel=2
+pkgver=0.16
+pkgrel=1
 pkgdesc='Intel(R) Math Kernel Library for Deep Neural Networks'
 arch=('x86_64')
 url='https://01.org/mkl-dnn'
 license=('APACHE')
 makedepends=('cmake')
-_mklmlver=2018.0.3.20180406
+_mklmlver=2019.0.20180710
 source=("https://github.com/intel/mkl-dnn/archive/v$pkgver.tar.gz"
-        "https://github.com/intel/mkl-dnn/releases/download/v$pkgver/mklml_lnx_${_mklmlver}.tgz"
-        "8764297.patch")
+        "https://github.com/intel/mkl-dnn/releases/download/v$pkgver/mklml_lnx_${_mklmlver}.tgz")
 noextract=('mklml_lnx_${_mklmlver}.tgz')
-sha256sums=('517a6c60b4d77170fc592ce1ccb61c7143f0f45e5d81bb1cda6ad2c2b6aea5d7'
-            'd2305244fdc9b87db7426ed4496e87a4b3977ad3374d73b8000e8b7a5b7aa725'
-            'ba6eaa96a10041efd104cee3bc3ae90276525ebe6cb22515ba5a3b13679634e9')
+sha256sums=('7557f820d6801dbe7741627199c0165fe9e651245b9c1c744d615f576da1098a'
+            'e2233534a9d15c387e22260997af4312a39e9f86f791768409be273b5453c4e6')
 
 prepare() {
     cd "$pkgname-$pkgver"
     mkdir -p external
     tar -xf "../mklml_lnx_${_mklmlver}.tgz" -C external --strip-components=1
-
-    patch -p1 < ../8764297.patch
 }
 
 build() {
