@@ -1,13 +1,12 @@
 pkgname=menoh
-pkgver=1.0.3
-pkgrel=2
+pkgver=1.1.0
+pkgrel=1
 pkgdesc='DNN inference library with C API'
 arch=('x86_64')
 url='https://github.com/pfnet-research/menoh'
 license=('MIT')
 depends=('mkl-dnn>=0.14' 'protobuf')
-makedepends=('cmake' 'git')
-checkdepends=('python')
+makedepends=('cmake' 'git' 'python')
 source=("git+https://github.com/pfnet-research/menoh.git#tag=v$pkgver")
 sha256sums=('SKIP')
 
@@ -27,8 +26,7 @@ build() {
           -DCMAKE_BUILD_TYPE=Release \
           -DENABLE_TEST=ON \
           -DENABLE_BENCHMARK=OFF \
-          -DENABLE_EXAMPLE=OFF \
-          -DENABLE_TOOL=ON
+          -DENABLE_EXAMPLE=OFF
     make
 }
 
@@ -38,8 +36,8 @@ check() {
     source venv/bin/activate
     pip install chainer
     mkdir -p data
-    python retrieve_data.py
-    python gen_test_data.py
+    python scripts/retrieve_data.py
+    python scripts/gen_test_data.py
 
     cd build
     ./test/menoh_test
@@ -50,5 +48,4 @@ package() {
     cd build
     make -C include DESTDIR="$pkgdir" install
     make -C menoh DESTDIR="$pkgdir" install
-    make -C tool DESTDIR="$pkgdir" install
 }
