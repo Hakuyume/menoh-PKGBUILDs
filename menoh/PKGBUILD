@@ -1,5 +1,5 @@
 pkgname=menoh
-pkgver=1.1.0
+pkgver=1.1.1
 pkgrel=1
 pkgdesc='DNN inference library with C API'
 arch=('x86_64')
