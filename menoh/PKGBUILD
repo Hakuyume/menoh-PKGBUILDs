@@ -10,12 +10,6 @@ makedepends=('cmake' 'git' 'python')
 source=("git+https://github.com/pfnet-research/menoh.git#tag=v$pkgver")
 sha256sums=('SKIP')
 
-prepare() {
-    cd "$pkgname"
-    sed -e 's/MENOH_PATCH_VERSION 2/MENOH_PATCH_VERSION 3/' \
-        -i CMakeLists.txt
-}
-
 build() {
     cd "$pkgname"
     mkdir -p build
