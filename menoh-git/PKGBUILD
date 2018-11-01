@@ -1,0 +1,53 @@
+pkgname=menoh-git
+pkgver=r455.d942e37
+pkgrel=1
+pkgdesc='DNN inference library with C API'
+arch=('x86_64')
+url='https://github.com/pfnet-research/menoh'
+license=('MIT')
+depends=('mkl-dnn>=0.14' 'protobuf')
+makedepends=('cmake' 'git' 'python')
+source=("git+https://github.com/pfnet-research/menoh.git")
+sha256sums=('SKIP')
+provides=("${pkgname%-git}")
+conflicts=("${pkgname%-git}")
+sha256sums=('SKIP')
+
+pkgver() {
+    cd "${pkgname%-git}"
+    printf "r%s.%s" "$(git rev-list --count HEAD)" "$(git rev-parse --short HEAD)"
+}
+
+build() {
+    cd "${pkgname%-git}"
+    mkdir -p build
+    cd build
+
+    cmake .. \
+          -DCMAKE_INSTALL_PREFIX=/usr \
+          -DCMAKE_BUILD_TYPE=Release \
+          -DENABLE_TEST=ON \
+          -DENABLE_BENCHMARK=OFF \
+          -DENABLE_EXAMPLE=OFF
+    make
+}
+
+check() {
+    cd "${pkgname%-git}"
+    python -m venv venv
+    source venv/bin/activate
+    pip install chainer
+    mkdir -p data
+    python scripts/retrieve_data.py
+    python scripts/gen_test_data.py
+
+    cd build
+    ./test/menoh_test
+}
+
+package() {
+    cd "${pkgname%-git}"
+    cd build
+    make -C include DESTDIR="$pkgdir" install
+    make -C menoh DESTDIR="$pkgdir" install
+}
