@@ -1,5 +1,5 @@
 pkgname=menoh-git
-pkgver=r455.d942e37
+pkgver=r502.b324d3c
 pkgrel=1
 pkgdesc='DNN inference library with C API'
 arch=('x86_64')
