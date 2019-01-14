@@ -1,17 +1,17 @@
 pkgname=mkl-dnn
-pkgver=0.16
+pkgver=0.17.2
 pkgrel=1
 pkgdesc='Intel(R) Math Kernel Library for Deep Neural Networks'
 arch=('x86_64')
 url='https://01.org/mkl-dnn'
 license=('APACHE')
 makedepends=('cmake')
-_mklmlver=2019.0.20180710
+_mklmlver=2019.0.1.20181227
 source=("https://github.com/intel/mkl-dnn/archive/v$pkgver.tar.gz"
         "https://github.com/intel/mkl-dnn/releases/download/v$pkgver/mklml_lnx_${_mklmlver}.tgz")
 noextract=('mklml_lnx_${_mklmlver}.tgz')
-sha256sums=('7557f820d6801dbe7741627199c0165fe9e651245b9c1c744d615f576da1098a'
-            'e2233534a9d15c387e22260997af4312a39e9f86f791768409be273b5453c4e6')
+sha256sums=('56c3e22d4fad816059cc58fd8e78ab3bacbec76a6bbded7eaead66220d8e5134'
+            '0a8b39dd63494b1c5f55ef0eb7cd9a4f8cc3bcba09177b20a078c2b47e00f677')
 
 prepare() {
     cd "$pkgname-$pkgver"
@@ -25,7 +25,6 @@ build() {
     cd build
 
     export CXXFLAGS=-Wno-error=format-truncation
-    export MKLROOT=external
     cmake .. \
           -DCMAKE_INSTALL_PREFIX=/usr \
           -DCMAKE_BUILD_TYPE=Release \
